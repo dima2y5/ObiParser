@@ -3,6 +3,7 @@ import scrapy
 
 
 class ProductItem(scrapy.Item):
+    category = scrapy.Field()
     type = scrapy.Field()
     title = scrapy.Field()
     desc = scrapy.Field()
@@ -10,8 +11,13 @@ class ProductItem(scrapy.Item):
     weight = scrapy.Field()
     link = scrapy.Field()
     img = scrapy.Field()
+    table1 = scrapy.Field()
+    table2 = scrapy.Field()
+    table3 = scrapy.Field()
+    availability = scrapy.Field()
 
 class GermetikItem(scrapy.Item):
+    category = scrapy.Field()
     type = scrapy.Field()
     base = scrapy.Field()
     title = scrapy.Field()
@@ -20,3 +26,7 @@ class GermetikItem(scrapy.Item):
     weight = scrapy.Field()
     link = scrapy.Field()
     img = scrapy.Field()
+    table1 = scrapy.Field()
+    table2 = scrapy.Field()
+    table3 = scrapy.Field()
+    availability = scrapy.Field()
