@@ -13,6 +13,8 @@ class OBISpyder(CrawlSpider):
     start_urls = ['https://www.obi.ru']
 
 
+
+
     rules = (
 
         Rule(LinkExtractor(allow=r'shtukaturki/.*'), callback='parse_smesi', follow=True),
@@ -32,10 +34,13 @@ class OBISpyder(CrawlSpider):
         Rule(LinkExtractor(allow=r'skoby-i-petli/.*'), callback='parse_kreplenia', follow=True),
         Rule(LinkExtractor(allow=r'ankernye-gvozdi/.*'), callback='parse_kreplenia', follow=True),
         Rule(LinkExtractor(allow=r'mednye-gvozdi-i-shtifty/.*'), callback='parse_kreplenia', follow=True),
+        Rule(LinkExtractor(allow=r'metricheskii-krepezh/.*'), callback='parse_kreplenia', follow=True),
+        Rule(LinkExtractor(allow=r'samorezy/.*'), callback='parse_kreplenia', follow=True),
     )
 
 
     def parse_smesi(self,response):
+        table31 = ['Вес: ', 'Высота: ', 'Ширина: ', 'Глубина: ']
 
         root = Selector(response)
         posts = root.xpath('//section[@class="overview__description span7-half"]')
@@ -63,12 +68,13 @@ class OBISpyder(CrawlSpider):
             item['img'] = h + img.xpath('.//@src').extract()[0]
             item['table1'] = table1.xpath('.//tbody/tr/*/text()').extract()
             item['table2'] = table2.xpath('.//tbody/tr/*/text()').extract()
-            item['table3'] = table3.xpath('.//tbody/tr/*/text()').extract()
+            item['table3'] = table31 + table3.xpath('.//tbody/tr/td/span/span/text()').extract()
             item['availability'] = availability.xpath('.//p[@class="font-xs green"]/text()').extract()[0]
 
             yield item
 
     def parse_germetik(self,response):
+        table31 = ['Вес: ', 'Высота: ', 'Ширина: ', 'Глубина: ']
         root = Selector(response)
         posts = root.xpath('//section[@class="overview__description span7-half"]')
         tables = root.xpath('//div[@class="table-container table-1 table-unstyled"]')
@@ -97,13 +103,13 @@ class OBISpyder(CrawlSpider):
             item['img'] = h + img.xpath('.//@src').extract()[0]
             item['table1'] = table1.xpath('.//tbody/tr/*/text()').extract()
             item['table2'] = table2.xpath('.//tbody/tr/*/text()').extract()
-            item['table3'] = table3.xpath('.//tbody/tr/*/text()').extract()
+            item['table3'] = table31 + table3.xpath('.//tbody/tr/td/span/span/text()').extract()
             item['availability'] = availability.xpath('.//p[@class="font-xs green"]/text()').extract()
 
             yield item
 
     def parse_derevo(self,response):
-
+        table31 = ['Вес: ', 'Высота: ', 'Ширина: ', 'Глубина: ']
         root = Selector(response)
         posts = root.xpath('//section[@class="overview__description span7-half"]')
         tables = root.xpath('//div[@class="table-container table-1 table-unstyled"]')
@@ -130,13 +136,13 @@ class OBISpyder(CrawlSpider):
             item['img'] = h + img.xpath('.//@src').extract()[0]
             item['table1'] = table1.xpath('.//tbody/tr/*/text()').extract()
             item['table2'] = table2.xpath('.//tbody/tr/*/text()').extract()
-            item['table3'] = table3.xpath('.//tbody/tr/*/text()').extract()
+            item['table3'] = table31 + table3.xpath('.//tbody/tr/td/span/span/text()').extract()
             item['availability'] = availability.xpath('.//p[@class="font-xs green"]/text()').extract()[0]
 
             yield item
 
     def parse_kreplenia(self,response):
-
+        table31 = ['Вес: ', 'Высота: ', 'Ширина: ', 'Глубина: ']
         root = Selector(response)
         posts = root.xpath('//section[@class="overview__description span7-half"]')
         tables = root.xpath('//div[@class="table-container table-1 table-unstyled"]')
@@ -163,7 +169,7 @@ class OBISpyder(CrawlSpider):
             item['img'] = h + img.xpath('.//@src').extract()[0]
             item['table1'] = table1.xpath('.//tbody/tr/*/text()').extract()
             item['table2'] = table2.xpath('.//tbody/tr/*/text()').extract()
-            item['table3'] = table3.xpath('.//tbody/tr/*/text()').extract()
+            item['table3'] = table31 + table3.xpath('.//tbody/tr/td/span/span/text()').extract()
             item['availability'] = availability.xpath('.//p[@class="font-xs green"]/text()').extract()[0]
 
             yield item
